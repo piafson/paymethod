@@ -48,7 +48,7 @@ t = "".join(str(value) for item in t for value in item.values())
 sha256 = hashlib.sha256()
 sha256.update(t.encode('utf-8'))
 t = sha256.hexdigest()
-data["Token"] = a  # добавляем токен к данным платежа
+data["Token"] = t  # добавляем токен к данным платежа
 
 response = requests.post(url, json=data)
 if response.json().get('PaymentURL'):
