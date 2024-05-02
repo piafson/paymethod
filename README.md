@@ -1,3 +1,3 @@
 ### Description
 
-payment module
+payment module.
