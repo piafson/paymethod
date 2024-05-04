@@ -54,6 +54,8 @@ class TestPaymentCgi(payment.PaymentCgi):
         if response.json().get('PaymentURL'):
             redirect_url = response.json().get('PaymentURL')
         else:
+            # переводим платеж в статус отменен
+            payment.set_canceled(self.elid, '', 'external_' + self.elid)
             redirect_url = self.fail_page  # страница неудачной оплаты
 
         # формируем html и отправляем в stdout
