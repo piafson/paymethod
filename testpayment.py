@@ -54,7 +54,7 @@ response = requests.post(url, json=data)
 if response.json().get('PaymentURL'):
     redirect_url = response.json().get('PaymentURL')
 else:
-    redirect_url = self.pending_page
+    redirect_url = self.fail_page # страница неудачной оплаты
 
 # формируем html и отправляем в stdout
 # таким образом переходим на redirect_url
