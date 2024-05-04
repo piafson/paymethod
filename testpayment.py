@@ -28,13 +28,13 @@ class TestPaymentCgi(payment.PaymentCgi):
 # должны перенаправлять на страницу платежной системы
 # redirect_url = self.pending_page;
 url = "https://securepay.tinkoff.ru/v2/Init"
-# paymethodamount = 100 * float(self.payment_params["paymethodamount"]) # сумма в копейках
+paymethodamount = 100 * float(self.payment_params["paymethodamount"]) # сумма платежа в копейках
 # subaccount = self.payment_params["subaccount"] # код л/с клиента
 
 # тестовые данные платежа
 data = {
     "TerminalKey": "TinkoffBankTest",
-    "Amount": 100,
+    "Amount": paymethodamount,
     "OrderId": "210900"
 }
 
