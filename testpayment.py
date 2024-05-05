@@ -4,8 +4,10 @@ import payment
 import sys
 import hashlib
 import requests
+import xml.etree.ElementTree as ET
 
 import billmgr.logger as logging
+import billmgr.db
 
 MODULE = 'payment'
 logging.init_logging('testpayment')
@@ -27,15 +29,20 @@ class TestPaymentCgi(payment.PaymentCgi):
         # здесь, в тестовом примере сразу перенаправляем на страницу BILLmanager
         # должны перенаправлять на страницу платежной системы
         # redirect_url = self.pending_page;
-        url = "https://securepay.tinkoff.ru/v2/Init"
+        url = "https://securepay.tinkoff.ru/v2/Init" # страница инициализации платежа tinkoff
         paymethodamount = 100 * float(self.payment_params["paymethodamount"])  # сумма платежа в копейках
         # subaccount = self.payment_params["subaccount"] # код л/с клиента
 
-        # тестовые данные платежа
+        # получаем из БД terminalkey
+        xml_str = billmgr.db.db_query("SELECT xmlparams FROM paymethod WHERE id=7")
+        root = ET.fromstring(xml_str[0].get('xmlparams'))
+        terminal_key = root[0].text
+
+        # данные платежа
         data = {
-            "TerminalKey": "TinkoffBankTest",
+            "TerminalKey": terminal_key,
             "Amount": paymethodamount,
-            "OrderId": "210900"
+            "OrderId": "210900" # тестовое значение
         }
 
         # получаем токен
