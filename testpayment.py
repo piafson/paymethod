@@ -34,7 +34,13 @@ class TestPaymentCgi(payment.PaymentCgi):
         # subaccount = self.payment_params["subaccount"] # код л/с клиента
 
         # получаем из БД terminalkey
-        xml_str = billmgr.db.db_query("SELECT xmlparams FROM paymethod WHERE id=7")
+        xml_str = billmgr.db.db_query("""
+                SELECT xmlparams 
+                FROM paymethod 
+                WHERE module = 'pmtestpayment'
+                AND id > 6
+                """)
+
         root = ET.fromstring(xml_str[0].get('xmlparams'))
         terminal_key = root[0].text
 
