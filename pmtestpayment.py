@@ -37,7 +37,7 @@ class TestPaymentModule(payment.PaymentModule):
         terminalkey = terminalkey_node.text if terminalkey_node is not None else ''
         terminalpsw = terminalpsw_node.text if terminalpsw_node is not None else ''
 
-        if terminalkey != 'rick' or terminalpsw != 'morty':
+        if terminalkey != 'TinkoffBankTest' or terminalpsw != 'TinkoffBankTest':
             raise billmgr.exception.XmlException('wrong_terminal_info')
 
 
